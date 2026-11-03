@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --nhs-blue: #005eb8;
+    --nhs-dark-blue: #002f6c;
+    --nhs-bright-blue: #0072ce;
+    --nhs-light-blue: #41b6e6;
+    --nhs-dark-pink: #7c2855;
+    --nhs-green: #007f3b;
+    --nhs-warm-yellow: #ffb81c;
+    --nhs-emergency-red: #d5281b;
+    --nhs-black: #212b32;
+    --nhs-secondary-text: #4c6272;
+    --nhs-border: #d8dde0;
+    --nhs-grey-1: #4c6272;
+    --nhs-grey-2: #768692;
+    --nhs-grey-3: #aeb7bd;
+    --nhs-grey-4: #d8dde0;
+    --nhs-grey-5: #f0f4f5;
+    --nhs-white: #ffffff;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--nhs-black);
+    background-color: #f0f4f5;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Print Specific Rules for Pixel-Perfect A4 Alignment */
+@page {
+  size: 210mm 297mm;
+  margin: 0mm;
+}
+
+@media print {
+  html, body {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Hide screen controls and non-printable UI */
+  .no-print,
+  nav,
+  header,
+  footer,
+  aside,
+  button,
+  .hide-on-print {
+    display: none !important;
+  }
+
+  /* Show print container and sheets */
+  .print-area-wrapper {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    background: transparent !important;
+  }
+
+  .a4-print-sheet {
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    overflow: hidden !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Remove borders around individual labels in print unless explicitly requested */
+  .label-cut-border-preview {
+    border-color: transparent !important;
+  }
+
+  .label-show-border-always {
+    border-color: #000000 !important;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f0f4f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #aeb7bd;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #768692;
+}
