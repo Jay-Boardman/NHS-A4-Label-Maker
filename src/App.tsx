@@ -109,86 +109,89 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f0f4f5] text-[#212b32]">
-      {/* NHS Standard Top Header */}
-      <NHSHeader
-        totalSheets={totalSheets}
-        totalLabels={totalRecords}
-        onPrint={handlePrint}
-        onOpenCalibration={() => setIsCalibrationModalOpen(true)}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        contentMode={mode}
-      />
+    <>
+      {/* Screen Interface - Completely excluded from print render tree */}
+      <div id="screen-ui" className="no-print min-h-screen flex flex-col bg-[#f0f4f5] text-[#212b32]">
+        {/* NHS Standard Top Header */}
+        <NHSHeader
+          totalSheets={totalSheets}
+          totalLabels={totalRecords}
+          onPrint={handlePrint}
+          onOpenCalibration={() => setIsCalibrationModalOpen(true)}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          contentMode={mode}
+        />
 
-      {/* Main Workspace Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
-        {activeTab === 'setup' && (
-          <LabelDimensionEditor
-            dimensions={dimensions}
-            setDimensions={setDimensions}
-            calibration={calibration}
-            setCalibration={setCalibration}
-            onProceed={() => setActiveTab('content')}
-          />
-        )}
+        {/* Main Workspace Body */}
+        <main className="no-print flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
+          {activeTab === 'setup' && (
+            <LabelDimensionEditor
+              dimensions={dimensions}
+              setDimensions={setDimensions}
+              calibration={calibration}
+              setCalibration={setCalibration}
+              onProceed={() => setActiveTab('content')}
+            />
+          )}
 
-        {activeTab === 'content' && (
-          <ContentEditor
-            mode={mode}
-            setMode={setMode}
-            repeatText={repeatText}
-            setRepeatText={setRepeatText}
-            styleSettings={styleSettings}
-            setStyleSettings={setStyleSettings}
-            spreadsheet={spreadsheet}
-            setSpreadsheet={setSpreadsheet}
-            dimensions={dimensions}
-            onProceed={() => setActiveTab('preview')}
-          />
-        )}
+          {activeTab === 'content' && (
+            <ContentEditor
+              mode={mode}
+              setMode={setMode}
+              repeatText={repeatText}
+              setRepeatText={setRepeatText}
+              styleSettings={styleSettings}
+              setStyleSettings={setStyleSettings}
+              spreadsheet={spreadsheet}
+              setSpreadsheet={setSpreadsheet}
+              dimensions={dimensions}
+              onProceed={() => setActiveTab('preview')}
+            />
+          )}
 
-        {activeTab === 'preview' && (
-          <A4SheetPreview
-            dimensions={dimensions}
-            styleSettings={styleSettings}
-            calibration={calibration}
-            mode={mode}
-            repeatText={repeatText}
-            spreadsheet={spreadsheet}
-            onPrint={handlePrint}
-            onOpenCalibration={() => setIsCalibrationModalOpen(true)}
-            skippedIndices={skippedIndices}
-            toggleSkipIndex={toggleSkipIndex}
-            onClearSkipped={clearSkippedIndices}
-          />
-        )}
-      </main>
+          {activeTab === 'preview' && (
+            <A4SheetPreview
+              dimensions={dimensions}
+              styleSettings={styleSettings}
+              calibration={calibration}
+              mode={mode}
+              repeatText={repeatText}
+              spreadsheet={spreadsheet}
+              onPrint={handlePrint}
+              onOpenCalibration={() => setIsCalibrationModalOpen(true)}
+              skippedIndices={skippedIndices}
+              toggleSkipIndex={toggleSkipIndex}
+              onClearSkipped={clearSkippedIndices}
+            />
+          )}
+        </main>
 
-      {/* Persistent Status & Quick Navigation Footer */}
-      <footer className="no-print bg-white border-t border-[#d8dde0] py-3 px-4 lg:px-8 text-xs text-[#4c6272]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-[#005eb8]">Jays A4 Label Studio</span>
-            <span>·</span>
-            <span>Sheet: <strong>{dimensions.name}</strong> ({dimensions.labelWidth} × {dimensions.labelHeight} mm, {dimensions.cols * dimensions.rows} labels/sheet)</span>
-            <span>·</span>
-            <span>Mode: <strong>{mode === 'repeat' ? 'Single Repeat' : `Spreadsheet (${spreadsheet.rows.length} rows)`}</strong></span>
+        {/* Persistent Status & Quick Navigation Footer */}
+        <footer className="no-print bg-white border-t border-[#d8dde0] py-3 px-4 lg:px-8 text-xs text-[#4c6272]">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-[#005eb8]">Jays A4 Label Studio</span>
+              <span>·</span>
+              <span>Sheet: <strong>{dimensions.name}</strong> ({dimensions.labelWidth} × {dimensions.labelHeight} mm, {dimensions.cols * dimensions.rows} labels/sheet)</span>
+              <span>·</span>
+              <span>Mode: <strong>{mode === 'repeat' ? 'Single Repeat' : `Spreadsheet (${spreadsheet.rows.length} rows)`}</strong></span>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setIsCalibrationModalOpen(true)}
+                className="text-[#005eb8] hover:underline font-semibold flex items-center gap-1"
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                Printer Settings Help
+              </button>
+              <span>·</span>
+              <span>Standard A4: 210 × 297 mm</span>
+            </div>
           </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsCalibrationModalOpen(true)}
-              className="text-[#005eb8] hover:underline font-semibold flex items-center gap-1"
-            >
-              <HelpCircle className="w-3.5 h-3.5" />
-              Printer Settings Help
-            </button>
-            <span>·</span>
-            <span>Standard A4: 210 × 297 mm</span>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
 
       {/* Hidden Print Engine (Only visible during @media print) */}
       {isPrintingTestSheet ? (
@@ -208,13 +211,15 @@ export default function App() {
       )}
 
       {/* Calibration Guide Modal */}
-      <PrintCalibrationModal
-        isOpen={isCalibrationModalOpen}
-        onClose={() => setIsCalibrationModalOpen(false)}
-        onPrintTestSheet={handlePrintTestSheet}
-        calibration={calibration}
-        setCalibration={setCalibration}
-      />
-    </div>
+      <div className="no-print">
+        <PrintCalibrationModal
+          isOpen={isCalibrationModalOpen}
+          onClose={() => setIsCalibrationModalOpen(false)}
+          onPrintTestSheet={handlePrintTestSheet}
+          calibration={calibration}
+          setCalibration={setCalibration}
+        />
+      </div>
+    </>
   );
 }

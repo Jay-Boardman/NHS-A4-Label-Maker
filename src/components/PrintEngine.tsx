@@ -76,12 +76,10 @@ export const PrintEngine: React.FC<PrintEngineProps> = ({
           className="a4-print-sheet"
           style={{
             width: '210mm',
-            height: '297mm',
+            height: '296.6mm',
             position: 'relative',
             overflow: 'hidden',
             backgroundColor: '#ffffff',
-            pageBreakAfter: pageIndex < totalSheets - 1 ? 'always' : 'auto',
-            breakAfter: pageIndex < totalSheets - 1 ? 'page' : 'auto',
             boxSizing: 'border-box',
           }}
         >
@@ -177,9 +175,17 @@ export const PrintEngine: React.FC<PrintEngineProps> = ({
                     wordBreak: 'break-word',
                     color: '#000000',
                     flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent:
+                      styleSettings.verticalAlign === 'top'
+                        ? 'flex-start'
+                        : styleSettings.verticalAlign === 'bottom'
+                        ? 'flex-end'
+                        : 'center',
                   }}
                 >
-                  {slot.text}
+                  <div>{slot.text}</div>
                 </div>
 
                 {/* Optional Barcode */}

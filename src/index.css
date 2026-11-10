@@ -31,28 +31,35 @@
   }
 }
 
-/* Print Specific Rules for Pixel-Perfect A4 Alignment */
+/* Print Specific Rules for Pixel-Perfect A4 Alignment & Zero Phantom Pages */
 @page {
   size: 210mm 297mm;
   margin: 0mm;
 }
 
 @media print {
+  *, *::before, *::after {
+    box-sizing: border-box !important;
+  }
+
   html, body {
     width: 210mm !important;
-    height: 297mm !important;
+    height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #ffffff !important;
+    overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     color-adjust: exact !important;
   }
 
-  /* Hide screen controls and non-printable UI */
+  /* Completely hide all screen elements during print */
   .no-print,
-  nav,
+  #screen-ui,
   header,
+  nav,
+  main,
   footer,
   aside,
   button,
@@ -60,12 +67,10 @@
     display: none !important;
   }
 
-  /* Show print container and sheets */
+  /* Show ONLY the print area container in normal document flow */
   .print-area-wrapper {
     display: block !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+    position: static !important;
     margin: 0 !important;
     padding: 0 !important;
     width: 210mm !important;
@@ -74,21 +79,30 @@
 
   .a4-print-sheet {
     width: 210mm !important;
-    height: 297mm !important;
-    min-height: 297mm !important;
-    max-height: 297mm !important;
+    /* 296.6mm instead of 297mm avoids the 0.4mm subpixel browser rounding bug that triggers an extra blank/cut-off page */
+    height: 296.6mm !important;
+    max-height: 296.6mm !important;
     box-shadow: none !important;
     border: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    page-break-after: always !important;
-    break-after: page !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     overflow: hidden !important;
     position: relative !important;
     box-sizing: border-box !important;
     background-color: #ffffff !important;
+  }
+
+  /* Page break ONLY between sheets, NEVER after the last sheet */
+  .a4-print-sheet:not(:last-child) {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .a4-print-sheet:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
   }
 
   /* Remove borders around individual labels in print unless explicitly requested */

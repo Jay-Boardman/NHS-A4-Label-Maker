@@ -292,8 +292,16 @@ export const A4SheetPreview: React.FC<A4SheetPreviewProps> = ({
                     )}
 
                     {/* Main Label Text */}
-                    <div className="whitespace-pre-wrap break-words flex-1 text-[#212b32]">
-                      {content.text || <span className="text-slate-300 italic">Empty</span>}
+                    <div
+                      className={`whitespace-pre-wrap break-words flex-1 flex flex-col ${
+                        styleSettings.verticalAlign === 'top'
+                          ? 'justify-start'
+                          : styleSettings.verticalAlign === 'bottom'
+                          ? 'justify-end'
+                          : 'justify-center'
+                      } text-[#212b32]`}
+                    >
+                      <div>{content.text || <span className="text-slate-300 italic">Empty</span>}</div>
                     </div>
 
                     {/* Barcode if enabled */}

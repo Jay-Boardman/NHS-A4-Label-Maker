@@ -6,7 +6,7 @@ export const TestCalibrationSheet: React.FC = () => {
       className="a4-print-sheet text-black font-sans relative"
       style={{
         width: '210mm',
-        height: '297mm',
+        height: '296.6mm',
         padding: '15mm',
         boxSizing: 'border-box',
         backgroundColor: '#ffffff',

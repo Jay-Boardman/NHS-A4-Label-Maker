@@ -437,7 +437,7 @@ NHS: {NHS Number}`,
               Typography & Label Layout
             </h3>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Font Size */}
               <div>
                 <label className="block text-xs font-semibold text-[#212b32] mb-1">
@@ -451,16 +451,13 @@ NHS: {NHS Number}`,
                       fontSizePt: parseInt(e.target.value) || 10,
                     }))
                   }
-                  className="w-full text-xs px-2.5 py-1.5 border border-[#768692] rounded bg-white"
+                  className="w-full h-[34px] text-xs px-2.5 py-1.5 border border-[#768692] rounded bg-white"
                 >
-                  <option value={7}>7 pt (Very Small / Mini)</option>
-                  <option value={8}>8 pt (Small)</option>
-                  <option value={9}>9 pt (Compact)</option>
-                  <option value={10}>10 pt (Standard NHS)</option>
-                  <option value={11}>11 pt (Medium)</option>
-                  <option value={12}>12 pt (Large)</option>
-                  <option value={14}>14 pt (Extra Large)</option>
-                  <option value={16}>16 pt (Bold Notice)</option>
+                  {[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28].map((size) => (
+                    <option key={size} value={size}>
+                      {size} pt
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -477,48 +474,12 @@ NHS: {NHS Number}`,
                       fontFamily: e.target.value as any,
                     }))
                   }
-                  className="w-full text-xs px-2.5 py-1.5 border border-[#768692] rounded bg-white"
+                  className="w-full h-[34px] text-xs px-2.5 py-1.5 border border-[#768692] rounded bg-white"
                 >
                   <option value="sans">Clean Sans-Serif (NHS)</option>
                   <option value="mono">Monospace (Clinical/Data)</option>
                   <option value="serif">Serif (Formal)</option>
                 </select>
-              </div>
-
-              {/* Alignment */}
-              <div>
-                <label className="block text-xs font-semibold text-[#212b32] mb-1">
-                  Text Align
-                </label>
-                <div className="flex border border-[#768692] rounded overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={() => setStyleSettings((prev) => ({ ...prev, textAlign: 'left' }))}
-                    className={`flex-1 py-1.5 flex items-center justify-center transition-colors ${
-                      styleSettings.textAlign === 'left' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50'
-                    }`}
-                  >
-                    <AlignLeft className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStyleSettings((prev) => ({ ...prev, textAlign: 'center' }))}
-                    className={`flex-1 py-1.5 flex items-center justify-center transition-colors ${
-                      styleSettings.textAlign === 'center' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50'
-                    }`}
-                  >
-                    <AlignCenter className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStyleSettings((prev) => ({ ...prev, textAlign: 'right' }))}
-                    className={`flex-1 py-1.5 flex items-center justify-center transition-colors ${
-                      styleSettings.textAlign === 'right' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50'
-                    }`}
-                  >
-                    <AlignRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
               </div>
 
               {/* Weight */}
@@ -534,12 +495,95 @@ NHS: {NHS Number}`,
                       fontWeight: e.target.value as any,
                     }))
                   }
-                  className="w-full text-xs px-2.5 py-1.5 border border-[#768692] rounded bg-white"
+                  className="w-full h-[34px] text-xs px-2.5 py-1.5 border border-[#768692] rounded bg-white"
                 >
                   <option value="normal">Normal (400)</option>
                   <option value="semibold">Medium-Bold (600)</option>
                   <option value="bold">Heavy Bold (700)</option>
                 </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              {/* Horizontal Text Alignment */}
+              <div>
+                <label className="block text-xs font-semibold text-[#212b32] mb-1">
+                  Text Align (Horizontal)
+                </label>
+                <div className="flex h-[34px] border border-[#768692] rounded overflow-hidden divide-x divide-[#768692]">
+                  <button
+                    type="button"
+                    title="Align Left"
+                    onClick={() => setStyleSettings((prev) => ({ ...prev, textAlign: 'left' }))}
+                    className={`flex-1 flex items-center justify-center gap-1.5 text-xs font-medium transition-colors ${
+                      styleSettings.textAlign === 'left' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50 text-[#212b32]'
+                    }`}
+                  >
+                    <AlignLeft className="w-3.5 h-3.5" />
+                    <span>Left</span>
+                  </button>
+                  <button
+                    type="button"
+                    title="Align Center"
+                    onClick={() => setStyleSettings((prev) => ({ ...prev, textAlign: 'center' }))}
+                    className={`flex-1 flex items-center justify-center gap-1.5 text-xs font-medium transition-colors ${
+                      styleSettings.textAlign === 'center' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50 text-[#212b32]'
+                    }`}
+                  >
+                    <AlignCenter className="w-3.5 h-3.5" />
+                    <span>Center</span>
+                  </button>
+                  <button
+                    type="button"
+                    title="Align Right"
+                    onClick={() => setStyleSettings((prev) => ({ ...prev, textAlign: 'right' }))}
+                    className={`flex-1 flex items-center justify-center gap-1.5 text-xs font-medium transition-colors ${
+                      styleSettings.textAlign === 'right' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50 text-[#212b32]'
+                    }`}
+                  >
+                    <AlignRight className="w-3.5 h-3.5" />
+                    <span>Right</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Vertical Text Alignment */}
+              <div>
+                <label className="block text-xs font-semibold text-[#212b32] mb-1">
+                  Vertical Align
+                </label>
+                <div className="flex h-[34px] border border-[#768692] rounded overflow-hidden divide-x divide-[#768692]">
+                  <button
+                    type="button"
+                    title="Align to Top"
+                    onClick={() => setStyleSettings((prev) => ({ ...prev, verticalAlign: 'top' }))}
+                    className={`flex-1 flex items-center justify-center px-2 text-xs font-medium transition-colors whitespace-nowrap ${
+                      styleSettings.verticalAlign === 'top' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50 text-[#212b32]'
+                    }`}
+                  >
+                    Top
+                  </button>
+                  <button
+                    type="button"
+                    title="Align to Middle"
+                    onClick={() => setStyleSettings((prev) => ({ ...prev, verticalAlign: 'center' }))}
+                    className={`flex-1 flex items-center justify-center px-2 text-xs font-medium transition-colors whitespace-nowrap ${
+                      styleSettings.verticalAlign === 'center' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50 text-[#212b32]'
+                    }`}
+                  >
+                    Middle
+                  </button>
+                  <button
+                    type="button"
+                    title="Align to Bottom"
+                    onClick={() => setStyleSettings((prev) => ({ ...prev, verticalAlign: 'bottom' }))}
+                    className={`flex-1 flex items-center justify-center px-2 text-xs font-medium transition-colors whitespace-nowrap ${
+                      styleSettings.verticalAlign === 'bottom' ? 'bg-[#005eb8] text-white' : 'bg-white hover:bg-slate-50 text-[#212b32]'
+                    }`}
+                  >
+                    Bottom
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -659,8 +703,16 @@ NHS: {NHS Number}`,
                 )}
 
                 {/* Content text */}
-                <div className="whitespace-pre-wrap break-words flex-1 text-[#212b32]">
-                  {previewText || <span className="text-slate-400 italic">Label is blank</span>}
+                <div
+                  className={`whitespace-pre-wrap break-words flex-1 flex flex-col ${
+                    styleSettings.verticalAlign === 'top'
+                      ? 'justify-start'
+                      : styleSettings.verticalAlign === 'bottom'
+                      ? 'justify-end'
+                      : 'justify-center'
+                  } text-[#212b32]`}
+                >
+                  <div>{previewText || <span className="text-slate-400 italic">Label is blank</span>}</div>
                 </div>
 
                 {/* Optional Barcode */}
